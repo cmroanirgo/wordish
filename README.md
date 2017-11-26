@@ -18,8 +18,19 @@ npm install -s wordish
 
 ## Installation (for use in browser)
 
+In your script add `<script type="text/javascript" src='https://unpkg.com/wordish@latest/dist/wordish.min.js'></script>` and then you're good to go!
+
 ```
-npm install -s wordish
+<script type="text/javascript">
+	function generate(){
+		var wordish = new Wordish(10); // 10=high accuracy/readbility of words
+		wordish.addPhrase(sourceText);
+		var words = wordish.createWords({
+
+		});
+		$('#result').value  = words.join(' ');
+	}
+</script>
 ```
 
 
