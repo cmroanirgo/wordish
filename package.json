@@ -1,0 +1,13 @@
+{
+  "name": "gh-pages",
+  "private":true,
+  "version": "1.0.0",
+  "description": "github pages for wordish",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "cp node_modules/wordish/dist/* js"
+  },
+  "author": "cmroanirgo",
+  "license": "ISC"
+}

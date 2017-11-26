@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,maximum-scale=2.0" />
+<link rel="stylesheet" type="text/css" href="styles.css">
+<script type="text/javascript" src="js/wordish.js" ></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"
+			  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+			   crossorigin="anonymous"></script>
+<script type="text/javascript" src="js/main.js" ></script>
+</head>
+<body>
+<div id="outer">
+	<div id="banner">
+		<h2><a href="<?php echo OT_BASE_URL;?>">Wordish</a></h2>
+		<i>A password generator</i>
+	</div>
+	<div id="contents">
+	<form action="#" onsubmit="return false;">
+		<label for="style">Style:</label>
+		<select id="style">
+			<option value='literary'>Literary</option>
+			<option value='sermon'>Sermon</option>
+			<option value='lorem'>Lorem Ipsum</option>
+			<option value='klingon'>Klingon</option>
+		</select>
+		<button id="generate">Generate</button>
+		<input id='result' type="text" />
+	</form>
+	</div>
+	<div id="footer">Copyright &copy; <a href="https://kodespace.com">kodespace.com</a> 2017. All rights reserved. <a href="https://github.com/cmroanirgo/wordish" ><img src="github12.png" alt="source on github"/></a></div>
+</div>
+</body>
+</html>

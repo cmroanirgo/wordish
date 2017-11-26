@@ -1,0 +1,47 @@
+* { margin:0; padding:0; box-sizing:border-box;}
+html,body{height:100%;}
+body { min-height:100%;font-size:16pt; font-family: sans-serif,sans,Arial;}
+#outer {
+	min-height:100%;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: column;
+	flex-direction: column;
+}
+#outer>div { padding: 2em 20%; word-spacing: nowrap}
+#banner,#footer { background-color: #555b93; color:white;}
+#banner {
+/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#a1a7d1+0,737ac7+13,7079cc+65,555b93+100 */
+background: #737ac7; /* Old browsers */
+background: -moz-linear-gradient(-45deg, #a1a7d1 0%, #737ac7 13%, #7079cc 65%, #555b93 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(-45deg, #a1a7d1 0%,#737ac7 13%,#7079cc 65%,#555b93 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(135deg, #a1a7d1 0%,#737ac7 13%,#7079cc 65%,#555b93 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a1a7d1', endColorstr='#555b93',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+}
+#footer *, #banner * { color:white; }
+#banner a { text-decoration:none;}
+#banner { height:6em; }
+div#footer { height:2em; 
+		padding-top: 0.5em; 
+		padding-bottom:0; 
+		font-size:9pt;}
+#footer img { vertical-align: middle;}
+
+#contents { 
+	-webkit-box-flex: 1;
+	-webkit-flex: 1;
+	flex: 1;
+}
+form { position: relative; width: 100%; }
+form>* { display: block; font-size: 0.8em; }
+textarea { width: 80%; height:6em; display: block; padding:0.2em;font-family: sans-serif;}
+label:not(:first-of-type) { margin-top: 1em; }
+input[type='text'], input[type='email'], input[type='password'] { padding: 0 0.2em; width:80%; }
+button { padding: 0.2em 0.3em; font-size: 1em; margin:0.5em 0;}
+button.small { display: inline; margin-top: 0;}
+
+.small { font-size: 0.6em; }
+.italics { font-style:italic; }
