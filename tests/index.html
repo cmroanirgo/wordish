@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,maximum-scale=2.0" />
+<style type="text/css">
+* { margin:0; padding:0; box-sizing:border-box;}
+html,body{height:100%;}
+body { min-height:100%;font-size:16pt; font-family: sans-serif,sans,Arial;}
+#outer {
+	min-height:100%;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: column;
+	flex-direction: column;
+}
+#outer>div { padding: 2em 20%; word-spacing: nowrap}
+#banner,#footer { background-color: #5690f5; color:white;}
+#banner {
+/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#71a2f7+0,5c91ed+13,5690f5+65,5c91ed+100 */
+background: #71a2f7; /* Old browsers */
+background: -moz-linear-gradient(-45deg, #71a2f7 0%, #5c91ed 13%, #5690f5 65%, #5c91ed 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(-45deg, #71a2f7 0%,#5c91ed 13%,#5690f5 65%,#5c91ed 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(135deg, #71a2f7 0%,#5c91ed 13%,#5690f5 65%,#5c91ed 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#71a2f7', endColorstr='#5c91ed',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+}
+#footer *, #banner * { color:white; }
+#banner a { text-decoration:none;}
+#banner { height:6em; }
+div#footer { height:2em; 
+		padding-top: 0.5em; 
+		padding-bottom:0; 
+		font-size:9pt;}
+#footer img { vertical-align: middle;}
+
+#contents { 
+	-webkit-box-flex: 1;
+	-webkit-flex: 1;
+	flex: 1;
+}
+form { position: relative; width: 100%; }
+form>* { display: block; font-size: 0.8em; }
+textarea { width: 80%; height:6em; display: block; padding:0.2em;font-family: sans-serif;}
+label:not(:first-of-type) { margin-top: 1em; }
+input[type='text'], input[type='email'], input[type='password'] { padding: 0 0.2em; width:80%; }
+button { padding: 0.2em 0.3em; font-size: 1em; margin:0.5em 0;}
+button.small { display: inline; margin-top: 0;}
+
+.small { font-size: 0.6em; }
+.italics { font-style:italic; }
+
+</style>
+<script type="text/javascript" src="../dist/wordish.js" ></script>
+<script type="text/javascript">
+	function el(id) { return document.getElementById(id); }
+	function generate(){
+		var wordish = new Wordish(10);
+		var text = el('source-text').value;
+		wordish.addPhrase(text);
+		var words = wordish.createWords({
+
+		});
+		el('result').value  = words.join(' ')
+	}
+
+</script>
+</head>
+<body>
+<div id="outer">
+	<div id="banner">
+		<h2><a href="<?php echo OT_BASE_URL;?>">Wordish</a></h2>
+		<i>A password generator</i>
+	</div>
+	<div id="contents">
+	<form action="#" onsubmit="return false;">
+		<textarea id='source-text'>Sed ut perspiciatis, unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam eaque ipsa, quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt, explicabo. Nemo enim ipsam voluptatem, quia voluptas sit, aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos, qui ratione voluptatem sequi nesciunt, neque porro quisquam est, qui dolorem ipsum, quia dolor sit amet consectetur adipisci[ng] velit, sed quia non numquam [do] eius modi tempora inci[di]dunt, ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?
+
+At vero eos et accusamus et iusto odio dignissimos ducimus, qui blanditiis praesentium voluptatum deleniti atque corrupti, quos dolores et quas molestias excepturi sint, obcaecati cupiditate non provident, similique sunt in culpa, qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio, cumque nihil impedit, quo minus id, quod maxime placeat, facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet, ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat
+		</textarea>
+		<button onclick="generate();return false;">Generate</button>
+		<input id='result' type="text" />
+	</form>
+	</div>
+	<div id="footer">Copyright &copy; <a href="https://kodespace.com">kodespace.com</a> 2017. All rights reserved. <a href="https://github.com/cmroanirgo/wordish" ><img src="github12.png" alt="source on github"/></a></div>
+</div>
+</body>
+</html>
