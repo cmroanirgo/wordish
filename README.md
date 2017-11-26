@@ -11,7 +11,16 @@ wordish
 
 ## Installation (for api use)
 
-`npm install -s wordish`
+```
+npm install -s wordish
+```
+
+
+## Installation (for use in browser)
+
+```
+npm install -s wordish
+```
 
 
 ## API Usage
