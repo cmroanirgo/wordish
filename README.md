@@ -4,7 +4,8 @@ A generator of word like phrases. Useful for passwords and publishing.
 
 ## Installation (for commandline use)
 
-```npm install -g wordish
+```
+npm install -g wordish
 wordish
 ```
 
@@ -12,7 +13,8 @@ wordish
 
 `npm install -s wordish`
 
-##API Usage
+
+## API Usage
 
 
 ```
@@ -34,7 +36,8 @@ var options = { // these options are all optional
 console.log(word.createWords(options).join('-'));
 ```
 
-A `correct battery horse staple` password generator:
+As a [correct battery horse staple](https://xkcd.com/936/) password generator:
+(requires a good set of long words in source document)
 
 ```
 const fs = require('fs')
@@ -82,9 +85,12 @@ function klingonValidator(text) {
 }
 ```
 
-Demo output:
+Demo klingon output (*):
+
 ```
 neH puql loD afflichen ghaH womb loD
 Earthly chenmo tlhuH Hev tlhIH vo' vaj SoS
 palaces 'a' Hegh 'ej Hoch 'ej
 ```
+
+(*) Not actually klingon!
