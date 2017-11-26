@@ -1,16 +1,16 @@
 {
   "name": "wordish",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A correct-horse-battery-staple word generator... without a dictionary.",
   "main": "index.js",
-"bin": {
+  "bin": {
     "wordish": "cli.js"
   },
-    "scripts": {
+  "scripts": {
     "test": "node tests/index.js",
     "build:norm": "browserify exports.js -u crypto  > dist/wordish.js",
     "build:min": "browserify  exports.js -u crypto | uglifyjs -m --comments > dist/wordish.min.js",
-    "build":"npm run build:norm && npm run build:min"
+    "build": "npm run build:norm && npm run build:min"
   },
   "repository": {
     "type": "git",
