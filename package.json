@@ -1,0 +1,31 @@
+{
+  "name": "wordish",
+  "version": "0.0.1",
+  "description": "A correct-horse-battery-staple word generator... without a dictionary.",
+  "main": "index.js",
+"bin": {
+    "wordish": "cli.js"
+  },
+    "scripts": {
+    "test": "node tests/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cmroanirgo/wordish.git"
+  },
+  "keywords": [
+    "word",
+    "password",
+    "generator",
+    "password generator"
+  ],
+  "author": "cmroanirgo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cmroanirgo/wordish/issues"
+  },
+  "homepage": "https://github.com/cmroanirgo/wordish#readme",
+  "dependencies": {
+    "minimist": "^1.2.0"
+  }
+}
