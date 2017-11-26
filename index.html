@@ -22,8 +22,21 @@
 		<select id="style">
 			<option value='literary'>Literary</option>
 			<option value='sermon'>Sermon</option>
-			<option value='lorem'>Lorem Ipsum</option>
+			<option value='lorem' selected>Lorem Ipsum</option>
 			<option value='klingon'>Klingon</option>
+		</select>
+		<label for="accuracy">Accuracy</label>
+		<input type="range" id="accuracy" min="2" max="20" value="8">
+		<label for="min-len">Minimum Word Length</label>
+		<input type="range" id="min-len"  min="2" max="20" value="5">
+		<label for="max-len">Maximum Word Length</label>
+		<input type="range" id="max-len"  min="5" max="20" value="10">
+		<label for="separator">Separator</label>
+		<select id="separator">
+			<option value=''>(None)</option>
+			<option value=' ' selected>Space</option>
+			<option value='-'>-</option>
+			<option value='.'>.</option>
 		</select>
 		<button id="generate">Generate</button>
 		<input id='result' type="text" />

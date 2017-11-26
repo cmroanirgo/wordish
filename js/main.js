@@ -38,12 +38,14 @@ $(document).ready(function() {
 	$('#generate').on('click', function() {
 		$('#result').value = '';
 		fetchSource(sources[$('#style').val()], function(srcObj) {
-			var wordish = new Wordish(10);
+			var wordish = new Wordish(parseInt($('#accuracy').val()));
 			wordish.addPhrase(srcObj.text, srcObj.validator);
-			var words = wordish.createWords({
-
-			});
-			$('#result').val(words.join(' '));
+			var options = {
+				minWordLen: parseInt($('#min-len').val()),
+				maxWordLen: parseInt($('#max-len').val())
+			}
+			var words = wordish.createWords(options);
+			$('#result').val(words.join($('#separator').val()));
 
 		})
 		return false;
