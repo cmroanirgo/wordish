@@ -7,7 +7,10 @@
     "wordish": "cli.js"
   },
     "scripts": {
-    "test": "node tests/index.js"
+    "test": "node tests/index.js",
+    "build:norm": "browserify  ./index.js --no-bundle-external -s Wordish > dist/wordish.js",
+    "build:min": "browserify  ./index.js --no-bundle-external -s Wordish  | uglifyjs -m --comments > dist/wordish.min.js",
+    "build":"npm run build:norm && npm run build:min"
   },
   "repository": {
     "type": "git",
