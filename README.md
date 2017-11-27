@@ -1,6 +1,6 @@
 # Wordish
 
-A generator of word like phrases. Useful for passwords and publishing.
+A generator of word like phrases. Useful for passwords and publishing. Try it out: (cmroanirgo.github.io/wordish/)[https://cmroanirgo.github.io/wordish/].
 
 ## Installation (for commandline use)
 
@@ -24,7 +24,7 @@ In your script add `<script type="text/javascript" src='https://unpkg.com/wordis
 <script type="text/javascript">
 	function generate(){
 		var wordish = new Wordish(10); // 10=high accuracy/readbility of words
-		wordish.addPhrase(sourceText);
+		wordish.learn(sourceText);
 		var words = wordish.createWords({
 
 		});
@@ -45,7 +45,7 @@ const filename = "somefile.txt";
 // Load up a text document that we'll use for source words
 var accuracy = 5; // from 2 to 20..ish. 10 is very accurate, 2 is very random/ gibberish
 var word = new Wordish(accuracy);
-word.addPhrase(fs.readFileSync(filename, {encoding:'utf8'}))
+word.learn(fs.readFileSync(filename, {encoding:'utf8'}))
 
 // generate a list of words
 var options = { // these options are all optional
@@ -67,7 +67,7 @@ const filename = "somefile.txt";
 // Load up a text document that we'll use for source words
 var accuracy = 10; 
 var word = new Wordish(accuracy);
-word.addPhrase(fs.readFileSync(filename, {encoding:'utf8'}))
+word.learn(fs.readFileSync(filename, {encoding:'utf8'}))
 
 // generate a list of words
 var options = { // these options are all optional
@@ -89,7 +89,7 @@ const filename = "klingon.txt";
 // Load up a text document that we'll use for source words
 var accuracy = 10; 
 var word = new Wordish(accuracy);
-word.addPhrase(fs.readFileSync(filename, {encoding:'utf8'}), klingonValidator)
+word.learn(fs.readFileSync(filename, {encoding:'utf8'}), klingonValidator)
 
 // generate a list of words
 var options = { // these options are all optional

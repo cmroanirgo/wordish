@@ -1,4 +1,9 @@
-'use strict';
+/**
+ * @license GPLv3
+ * Copyright (c) 2017 Craig Monro (cmroanirgo). All rights reserved.
+ **/
+
+ 'use strict';
 var fs = require('fs');
 var path = require('path');
 var Dict = require('./index');
@@ -59,7 +64,7 @@ function dirExists(filename) {  try { return fs.statSync(filename).isDirectory()
 
 	function processData() {
 		var dict = new Dict(accuracy);
-		dict.addPhrase(sourceText);
+		dict.learn(sourceText);
 		while (numSamples--) {
 			var words = dict.createWords(options);
 			console.log(words.join(separator))

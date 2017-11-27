@@ -8,9 +8,10 @@
   },
   "scripts": {
     "test": "node tests/index.js",
-    "build:norm": "browserify exports.js -u crypto  > dist/wordish.js",
-    "build:min": "browserify  exports.js -u crypto | uglifyjs -m --comments > dist/wordish.min.js",
-    "build": "npm run build:norm && npm run build:min"
+    "build:dbg": "browserify exports.js -u crypto  > dist/wordish.dbg.js",
+    "build:norm": "browserify exports.js -u crypto | uglifyjs --comments --beautify --mangle --mangle-props --mangle-regex=\"/^_/\" > dist/wordish.js",
+    "build:min": "browserify  exports.js -u crypto | uglifyjs --comments --mangle --mangle-props --mangle-regex=\"/^_/\" > dist/wordish.min.js",
+    "build": "npm run build:norm && npm run build:min && cd gh-pages && npm run build"
   },
   "repository": {
     "type": "git",

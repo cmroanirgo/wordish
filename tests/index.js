@@ -22,6 +22,16 @@ function dump(obj, depth) {
 	, depth); 
 }
 
+// extend class
+function createPhrase(dict) {
+	var options = { numWords:Math.floor(Math.random()*12)+3 }; // 3-15 random words
+	var phrase = dict.createWords(options).join(' ').replace(/  /g, ' ') + '. '; // (each word is already terminated by a space - but don't assume it's always so);
+	phrase = phrase.replace(/^(.)/, function(m, m1)  { return m1.toUpperCase(); });
+	//phrase[0] = phrase[0].toUpperCase();
+	return phrase;
+};
+
+
 
 var wordaccuracy = 5; // 3=low, 8=nearly perfect, 5=most
 var dict = new Dict(wordaccuracy);
@@ -32,10 +42,10 @@ function loadAndCreate(sourceFile, validator) {
 		sourceFile += '.txt';
 	var sourceText = fs.readFileSync(path.join(__dirname, 'samples', sourceFile), {encoding:'utf8'})
 	dict.reset();
-	dict.addPhrase(sourceText, validator);
+	dict.learn(sourceText, validator);
 	//console.log(dump(dict, 2))
 	for (var i=0; i<samples; i++)
-		console.log(dict.createPhrase());
+		console.log(createPhrase(dict));
 }
 
 
