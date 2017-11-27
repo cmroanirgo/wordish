@@ -15,34 +15,38 @@
 	<div id="banner">
 		<h2><a href="https://cmroanirgo.github.io/wordish/">Wordish</a></h2>
 		<i>A password generator</i>
+		<p><a href="https://github.com/cmroanirgo/wordish">Source</a></p>
 	</div>
 	<div id="contents">
 	<form action="#" onsubmit="return false;">
 		<label for="style">Style:</label>
 		<select id="style">
-			<option value='literary'>Literary</option>
+			<option value='literary' selected>Literary</option>
 			<option value='sermon'>Sermon</option>
-			<option value='lorem' selected>Lorem Ipsum</option>
+			<option value='lorem'>Lorem Ipsum</option>
 			<option value='klingon'>Klingon</option>
 		</select>
-		<label for="num-words">Number of Words</label>
-		<input type="range" id="num-words"  min="2" max="20" value="5">
-		<label for="rand-words">Randomize Number of Words</label>
-		<input type="range" id="rand-words"  min="0" max="10" value="3">
-		<label for="accuracy">Accuracy</label>
-		<input type="range" id="accuracy" min="2" max="20" value="8">
-		<label for="min-len">Minimum Word Length</label>
-		<input type="range" id="min-len"  min="2" max="20" value="5">
-		<label for="max-len">Maximum Word Length</label>
-		<input type="range" id="max-len"  min="5" max="20" value="10">
-		<label for="separator">Separator</label>
-		<select id="separator">
-			<option value=''>(None)</option>
-			<option value=' ' selected>Space</option>
-			<option value='-'>-</option>
-			<option value='.'>.</option>
-		</select>
-		<button id="generate">Generate</button>
+		<a id="more-button" href="#">More</a>
+		<div id="more">
+			<label for="num-words">Number of Words</label>
+			<input type="range" id="num-words"  min="2" max="20" value="5"><br/>
+			<label for="rand-words">Randomize Number of Words</label>
+			<input type="range" id="rand-words"  min="0" max="10" value="3"><br/>
+			<label for="accuracy">Word Accuracy</label>
+			<input type="range" id="accuracy" min="2" max="20" value="8"><br/>
+			<label for="min-len">Minimum Word Length</label>
+			<input type="range" id="min-len"  min="2" max="20" value="5"><br/>
+			<label for="max-len">Maximum Word Length</label>
+			<input type="range" id="max-len"  min="5" max="20" value="10"><br/>
+			<label for="separator">Separator</label>
+			<select id="separator">
+				<option value=''>(None)</option>
+				<option value=' ' selected>Space</option>
+				<option value='-'>-</option>
+				<option value='.'>.</option>
+			</select><br/>
+		</div>
+		<button id="generate">Generate</button><br/>
 		<input id='result' type="text" />
 	</form>
 	</div>

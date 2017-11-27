@@ -24,6 +24,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a1a7d1', end
 #footer *, #banner * { color:white; }
 #banner a { text-decoration:none;}
 #banner { height:6em; }
+#banner p>a { font-size: 10pt; float:right;}
 div#footer { height:2em; 
 		padding-top: 0.5em; 
 		padding-bottom:0; 
@@ -36,7 +37,8 @@ div#footer { height:2em;
 	flex: 1;
 }
 form { position: relative; width: 100%; }
-form>* { display: block; font-size: 0.8em; }
+form * { font-size: 0.8em; }
+label { display: block;}
 textarea { width: 80%; height:6em; display: block; padding:0.2em;font-family: sans-serif;}
 label:not(:first-of-type) { margin-top: 1em; }
 input[type='text'], input[type='email'], input[type='password'] { padding: 0 0.2em; width:80%; }
@@ -45,3 +47,22 @@ button.small { display: inline; margin-top: 0;}
 
 .small { font-size: 0.6em; }
 .italics { font-style:italic; }
+input:not(#result), select { width:180px;}
+.range-value {
+	vertical-align: top;
+	padding: 1em;
+}
+#more { position: relative;  display: none; padding: 1em 0;}
+#more * { font-size: 1em; }
+#more.show { display: block;}
+#more-button { display:block; 
+	width:200px; 
+	text-align:right; 
+	font-size: 0.6em; 
+	border-bottom:1px solid #ccc; 
+	margin: 1em 0;
+	text-decoration: none;
+	color:#333;
+}
+#more-button:before { content: "[ ";}
+#more-button:after { content: " ]";}

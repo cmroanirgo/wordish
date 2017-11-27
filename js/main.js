@@ -34,29 +34,47 @@ var sources = {
 	"klingon"    : { file: "klingon.txt", validator: klingonValidator },
 };
 
-$(document).ready(function() {
-	$('#generate').on('click', function() {
-		$('#result').value = '';
-		fetchSource(sources[$('#style').val()], function(srcObj) {
-			var wordish = new Wordish(parseInt($('#accuracy').val()));
-			wordish.learn(srcObj.text, srcObj.validator);
-			var options = {
-				minWordLen: parseInt($('#min-len').val()),
-				maxWordLen: parseInt($('#max-len').val()),
-				numWords: parseInt($('#num-words').val()),
-				randomizeNumWords: parseInt($('#rand-words').val())
-			}
-			var words = wordish.createWords(options);
-			$('#result').val(words.join($('#separator').val()));
+function generate() {
+	$('#result').value = '';
+	fetchSource(sources[$('#style').val()], function(srcObj) {
+		var wordish = new Wordish(parseInt($('#accuracy').val()));
+		wordish.learn(srcObj.text, srcObj.validator);
+		var options = {
+			minWordLen: parseInt($('#min-len').val()),
+			maxWordLen: parseInt($('#max-len').val()),
+			numWords: parseInt($('#num-words').val()),
+			randomizeNumWords: parseInt($('#rand-words').val())
+		}
+		var words = wordish.createWords(options);
+		$('#result').val(words.join($('#separator').val()));
 
-		})
-		return false;
 	})
+	return false;
+}
+$(document).ready(function() {
+	$('#generate').on('click', generate)
 
+	$('input:not(#result),select').on("change", generate)
 	$('input[type="range"]').on("input", function(){
-		console.log(this.value);
-		$(this).next().html(this.value);
-	}).after("<span class='range'></span>");
+			$(this).next().html(this.value);
+		}).after("<span class='range-value'></span>").each(function() {
+			$(this).next().html(this.value);
+		});
+	$('#more-button').on('click', function() {
+		var $more = $('#more');
+		var $btn  = $(this);
+		if ($more.hasClass('show')) {
+			$more.removeClass('show')
+			$btn.text('More')
+		}
+		else
+		{
+			$more.addClass('show')
+			$btn.text('Less')
+		}
+		return false;
+	});
+	generate();
 }); 
 
 
