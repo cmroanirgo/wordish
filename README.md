@@ -1,6 +1,6 @@
 # Wordish
 
-A generator of word like phrases. Useful for passwords and publishing. Try it out: (cmroanirgo.github.io/wordish/)[https://cmroanirgo.github.io/wordish/].
+A generator of word like phrases. Useful for passwords and publishing. Try it out: [cmroanirgo.github.io/wordish/](https://cmroanirgo.github.io/wordish/).
 
 ## Installation (for commandline use)
 
