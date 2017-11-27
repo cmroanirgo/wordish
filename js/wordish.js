@@ -60,9 +60,10 @@
         }
         var a = {
             numWords: 8,
+            randomizeNumWords: 0,
             minWordLen: 3,
             maxWordLen: 10,
-            randomizer: new c()
+            randomizer: new d()
         };
         function s() {
             this.totalUsage = 0;
@@ -144,7 +145,7 @@
         h.prototype.createWords = function(t) {
             t = o({}, a, t);
             var e = [];
-            var r = t.numWords;
+            var r = t.numWords + (t.randomizeNumWords > 0 ? c(0, t.randomizeNumWords) : 0);
             while (r-- > 0) {
                 var i = 100;
                 do {
@@ -175,7 +176,11 @@
             }
             return this.items;
         };
-        function c(t) {
+        function c(t, e) {
+            var r = new d(1);
+            return r.generate(t, e);
+        }
+        function d(t) {
             this.rand = [];
             this.at = 0;
             t = t || 40;
@@ -187,7 +192,7 @@
                 this.values = n.randomBytes(t);
             }
         }
-        c.prototype.generate = function(t, e) {
+        d.prototype.generate = function(t, e) {
             if (this.at >= this.values.length) {
                 if (i) window.crypto.getRandomValues(this.values); else this.values = n.randomBytes(this.values.length);
                 this.at = 0;

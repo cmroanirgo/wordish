@@ -42,7 +42,9 @@ $(document).ready(function() {
 			wordish.learn(srcObj.text, srcObj.validator);
 			var options = {
 				minWordLen: parseInt($('#min-len').val()),
-				maxWordLen: parseInt($('#max-len').val())
+				maxWordLen: parseInt($('#max-len').val()),
+				numWords: parseInt($('#num-words').val()),
+				randomizeNumWords: parseInt($('#rand-words').val())
 			}
 			var words = wordish.createWords(options);
 			$('#result').val(words.join($('#separator').val()));
@@ -50,6 +52,11 @@ $(document).ready(function() {
 		})
 		return false;
 	})
+
+	$('input[type="range"]').on("input", function(){
+		console.log(this.value);
+		$(this).next().html(this.value);
+	}).after("<span class='range'></span>");
 }); 
 
 
