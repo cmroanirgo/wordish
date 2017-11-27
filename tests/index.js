@@ -24,7 +24,7 @@ function dump(obj, depth) {
 
 // extend class
 function createPhrase(dict) {
-	var options = { numWords:Math.floor(Math.random()*12)+3 }; // 3-15 random words
+	var options = { numWords:3, randomizeNumWords:12 }; // 3-15 random words
 	var phrase = dict.createWords(options).join(' ').replace(/  /g, ' ') + '. '; // (each word is already terminated by a space - but don't assume it's always so);
 	phrase = phrase.replace(/^(.)/, function(m, m1)  { return m1.toUpperCase(); });
 	//phrase[0] = phrase[0].toUpperCase();

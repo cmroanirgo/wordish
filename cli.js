@@ -32,6 +32,8 @@ function dirExists(filename) {  try { return fs.statSync(filename).isDirectory()
 		options.minWordLen = argv['min-len'];
 	if (argv['num-words'])
 		options.numWords = argv['num-words'];
+	if (argv['rand'])
+		options.randomizeNumWords = argv['rand'];
 	if (argv['num-samples'])
 		numSamples = argv['num-samples'];
 	if (argv['separator'])
@@ -77,6 +79,7 @@ function dirExists(filename) {  try { return fs.statSync(filename).isDirectory()
 	alias:{
 		'a': 'accuracy',
 		'n': 'min-len',
+		'r': 'rand',
 		's': 'separator',
 		'i': 'num-samples',
 		'w': 'num-words', 
@@ -92,7 +95,8 @@ function showHelp() {
 		"WHERE:\n"+
 		"\tsource.txt         A document holding a sample set of words. \n"+
 		"\t                       If missing, use --stdin option.\n" +
-		"\t--num-words, -w    Number of words to generate. Default is random 5-8 \n" +
+		"\t--num-words, -w    Number of words to generate. Default is 5 \n" +
+		"\t--rand, -r         Add a random# of this many words. Default is 0 \n" +
 		"\t--min-len, -n      Minimum word length. Default is 3\n" +
 		"\t--max-len, -x      Maximum word length. Default is 10\n" +
 		"\t--accuracy, -a     Word accuracy 2..20. Default is 5. 3 is random, 10 is nearly perfect\n" +
@@ -103,7 +107,7 @@ function showHelp() {
 		"\n" + 
 		"eg.\n" + 
 		"\twordish tests/samples/lorem.txt -n 8 -a 8\n"+
-		"\tcat tests/samples/lorem.txt | wordish --stdin -i 10 -a 20 -s \"-\"\n"+
+		"\tcat tests/samples/lorem.txt | wordish --stdin -i 10 -a 20 -r 3 -s \"-\"\n"+
 		"");
 	process.exit(-1);
 }
