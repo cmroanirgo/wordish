@@ -1,6 +1,6 @@
 {
   "name": "wordish",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A correct-horse-battery-staple word generator... without a dictionary.",
   "main": "index.js",
   "bin": {
