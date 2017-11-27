@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,maximum-scale=2.0" />
+<link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+<div id="outer">
+	<div id="banner">
+		<h2><a href="https://cmroanirgo.github.io/wordish/">Wordish</a></h2>
+		<i>A password generator</i>
+		<p><a href="about.html">About</a> <a href="https://github.com/cmroanirgo/wordish">Source</a></p>
+	</div>
+	<div id="contents">
+		<p>This project came to fruition because I was disatisfied with the quality of the dictionary based password generators that abound everywhere.</p>
+		<p>It came to my attention that most of those projects used massive word sets, and were full of slang and idioms that are as strange to type as a random set of characters are. Not only that, there were generally limited to a specific dictionary, typically the most common english words.</p>
+		
+<p>This sample password generator uses 4 different texts in order to generate different flavours of passwords. Ranging from <i>The Happy Prince</i>, by Oscar Wilde, <i>Sermon on the Mount</i>, The Bible (KJV), the original phrasing of <i>Lorem Ipsum</i> (<a href="https://en.wikipedia.org/wiki/Lorem_ipsum#Latin_source">source</a>) and a smattering of <i>Klingon</i> that I could find on the web.</p>
+
+		<p>Harkening back to my first year of uni -- we were given a project to write a program that simulated the <a href="https://en.wikipedia.org/wiki/Infinite_monkey_theorem">monkeys problem</a><sup>*</sup>, but with a twist: the keys on the typewriter was to be changed to reflect the previously typed character, in order to promote actual words, but would still be random.</p>
+		<p>For example, given the input string:</p>
+		<blockquote>Sally sells seashells by the seashore.</blockquote>
+		<p>The 'first' keyboard would have 6 letters, 4 of them are 's', as well as 'b' and 't'.</p>
+		<p>After randomly selecting a letter, the keyboard is changed. So, if 's' was chosen, then the keyboard would now have three 'e's and one 'a'. And so on.</p>
+
+		<p>This project uses that mentality. Given a source document we generate a tree of possible letter combinations. We control our accuracy by limiting how deep the tree can be. I think it provides a much better result than a dictionary system proposed in xkcd's <a href="https://xkcd.com/936/">correct horse battery staple:</a></p>
+		<p class="center"><img src="https://imgs.xkcd.com/comics/password_strength.png"/></p>
+
+
+		
+		<p class="footnote"><sup>*</sup> The gist of the theorem was that given an infinite number of monkeys behind a typewriter, eventually they'll type out the works of Shakespeare. Sadly, experimentation showed the folly of such mentation: 
+		<blockquote class="footnote">Not only did the monkeys produce nothing but five total pages largely consisting of the letter S, the lead male began by bashing the keyboard with a stone, and the monkeys continued by urinating and defecating on it.</blockquote></p>
+
+	</div>
+	<div id="footer">Copyright &copy; <a href="https://kodespace.com">kodespace.com</a> 2017. All rights reserved. <a href="https://github.com/cmroanirgo/wordish" ><img src="github12.png" alt="source on github"/></a></div>
+</div>
+</body>
+</html>
