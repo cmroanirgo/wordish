@@ -39,7 +39,7 @@ $(document).ready(function() {
 		$('#result').value = '';
 		fetchSource(sources[$('#style').val()], function(srcObj) {
 			var wordish = new Wordish(parseInt($('#accuracy').val()));
-			wordish.addPhrase(srcObj.text, srcObj.validator);
+			wordish.learn(srcObj.text, srcObj.validator);
 			var options = {
 				minWordLen: parseInt($('#min-len').val()),
 				maxWordLen: parseInt($('#max-len').val())

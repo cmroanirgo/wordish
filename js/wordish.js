@@ -1,320 +1,206 @@
-(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-/**
+(function t(e, r, i) {
+    function n(a, s) {
+        if (!r[a]) {
+            if (!e[a]) {
+                var h = typeof require == "function" && require;
+                if (!s && h) return h(a, !0);
+                if (o) return o(a, !0);
+                var u = new Error("Cannot find module '" + a + "'");
+                throw u.code = "MODULE_NOT_FOUND", u;
+            }
+            var f = r[a] = {
+                exports: {}
+            };
+            e[a][0].call(f.exports, function(t) {
+                var r = e[a][1][t];
+                return n(r ? r : t);
+            }, f, f.exports, t, e, r, i);
+        }
+        return r[a].exports;
+    }
+    var o = typeof require == "function" && require;
+    for (var a = 0; a < i.length; a++) n(i[a]);
+    return n;
+})({
+    1: [ function(t, e, r) {
+        /**
  * @license GPLv3
  * Copyright (c) 2017 Craig Monro (cmroanirgo). All rights reserved.
  *
  * This file is for browser consumption
  **/
-
-window.Wordish = require('./index');
-
-
-},{"./index":2}],2:[function(require,module,exports){
-/**
+        window.Wordish = t("./index");
+    }, {
+        "./index": 2
+    } ],
+    2: [ function(t, e, r) {
+        /**
  * @license GPLv3
  * Copyright (c) 2017 Craig Monro (cmroanirgo). All rights reserved.
  **/
-module.exports = require('./lib/dict');
-
-},{"./lib/dict":3}],3:[function(require,module,exports){
-// A simple lookup system, recursively mapping:
-//  	a letter/character to it's usage
-//		a child 'dictionary' of characters that follow it.
-'use strict';
-
-var _hasWindow = typeof window !== 'undefined';
-if (!_hasWindow)
-	var crypto = require('crypto');
-
-
-function extend(origin) { // copied from electron-api-demos/node_modules/glob/glob.js & then hacked to oblivion
-	// now, you can keep extending, by using
-	// _.extend(origin, data1, data2, data3) & all options will be added onto origin only.
-	// The 'rightmost' value of a key will be applied.
-
-	for (var a=1; a<arguments.length; a++) {
-		var add = arguments[a];
-		if (add === null || typeof add !== 'object')
-			continue;
-
-		var keys = Object.keys(add)
-		var i = keys.length
-		while (i--) {
-			origin[keys[i]] = add[keys[i]]
-		}
-	}
-
-	return origin
-}
-
-var defaultCreateOptions = {
-	numWords: 8,
-	minWordLen: 3,
-	maxWordLen: 10,
-	randomizer: new Randomizer()
-};
-
-
-/////////////////////////////////////////////////////
-//
-
-function Dict() {
-	this.totalUsage = 0;
-	this.items = { }; // a map eg. 'a'->DictItem
-	this.depth = 0;
-}
-
-Dict.prototype._addChar = function(char) { // a 'learn-mode' function
-	var di = this.items[char];
-	if (!di) {
-		di = new DictItem(char);
-		this.items[char] = di;
-	}
-	di.usage++;
-	this.totalUsage++;
-	return di;
-};
-
-Dict.prototype._addWords = function(word, root) { // a 'learn-mode' function
-	// eg. the string 'Word', adds/updates the following in to this.items:
-	// { // DictItem
-	// 	char: 'W',
-	// 	usage: ...,
-	// 	items: { // DictItem
-	// 		char: 'o',
-	// 		usage: ..., 
-	// 		items: { // DictItem
-	// 			char: 'r',
-	// 			usage: ...,
-	// 			items: { // DictItem
-	// 				char: 'd',
-	// 				usage: ...
-	// 				items: {
-	// 					char: ' ',
-	// 					...
-	// 				}
-	// 			}
-	// 		}
-	// 	}
-	// }
-
-	// BUT, if maxDepth is (eg 3, the default):
-
-	// { // DictItem
-	// 	char: 'W',
-	// 	usage: ...,
-	// 	items: { // DictItem
-	// 		char: 'o',
-	// 		usage: ..., 
-	// 		items: { // DictItem
-	// 			char: 'r',
-	// 			usage: ...,
-	// 		}
-	// 	}
-	// },
-	// { // DictItem
-	// 	char: 'd',
-	// 	usage: ...
-	// 	items: {
-	// 		char: ' ',
-	// 		...
-	// 	}
-	// }
-
-
-	var dict = this;
-	for (var i = 0; i < word.length; i++) {
-		var di = dict._addChar(word[i]);
-		if (word[i]==' ')// if a word just ended, then start again at root
-			dict = root;
-		else if (dict.depth>=root.maxDepth)// don't let the tree get too deep! 
-		
-		{
-			dict = dict.parent || root;	// easy method. Go up one level (or start again at root)
-			if (i>0) {
-				// method. find the previous letter as a child of the root element and continue from there
-				var di = root.get(word[i]);
-				if (di) // have we added this letter to the root chain yet?
-					dict = di.getSubItems(root);
-				// else. Nope. use a parent dict instead
-			}
-		}
-		else
-			dict = di.getSubItems(dict); 
-	};
-};
-
-Dict.prototype.seek = function(ith) {
-	ith = Math.floor(ith);
-	var usage = 0;
-	var di = null;
-	for (var key in this.items) {
-		di = this.items[key];
-		usage += di.usage;
-		if (ith<=usage)
-			return di;
-	}
-	return di; // return the last element, or null
-};
-
-Dict.prototype.closestLetter = function(letter) {
-	var di = this.items[letter];
-	if (!di && this.parent)
-		return this.parent.closestLetter(letter);
-	return di;
-};
-Dict.prototype.get = function(letter) {
-	return this.items[letter];
-};
-
-Dict.prototype._createLetter = function(prevLetter, randomizer, root) {
-	var ith = randomizer.generate(0, this.totalUsage); // generate a random# bewtween 0 & the total#chars collected
-	var di = this.seek(ith); // find the letter
-	if (!di) { // no child characters! Return to the root and continue
-		/*var dict = this.parent; // ...the dictionary of the previous letter
-		if (dict && dict.parent) // seek the previous letter in the grandparent's nodes (the parent of the parent)
-			dict = dict.parent;
-		else
-			dict = root; // start at the top, as if it's a new word :O
-		di = dict.closestLetter(prevLetter);
-		*/
-		var dict = root; // seek the previous letter in the root level
-		di = dict.get(prevLetter);
-
-		if (!!di) { // found the previous letter that we can try again with
-			dict = di.getSubItems(dict);
-			if (dict==this) // uh oh! found ourselves again! just generate a random#
-				return root._createLetter(prevLetter, randomizer, root);
-			return dict._createLetter(prevLetter, randomizer, root);
-		}
-		return ''; // abort. can't generate another after the previous letter
-	}
-
-	if (!di || di.char == ' ')
-		return ''; // stop recursing
-	var subword = di.getSubItems(this)._createLetter(di.char, randomizer, root); // recurse
-	return di.char + subword;
-};
-
-/////////////////////////////////////////////////////
-//
-function RootDict(max_depth) {
-	Dict.call(this);
-	this.maxDepth = max_depth || 5; // only generate a usage tree of 5 consecutive letters
-}
-extend(RootDict.prototype, Dict.prototype);
-
-RootDict.prototype.reset = function() {
-	this.totalUsage = 0;
-	this.items = { }; // a map eg. 'a'->DictItem
-};
-RootDict.prototype.createWord = function(options) {
-	options = extend({}, defaultCreateOptions, options);
-	if (options.minWordLen>=options.maxWordLen)
-		throw new Error("Minimum word length ("+options.minWordLen+") should be shorter than the maximum word length ("+options.maxWordLen+")")
-	var word;
-	do {
-		word = this._createLetter(' ', options.randomizer, this).trim();
-	} while (word.length<options.minWordLen || word.length>options.maxWordLen);
-	return word;
-};
-
-RootDict.prototype.createWords = function(options) {
-	options = extend({}, defaultCreateOptions, options);
-	var words = [];
-	var numWords = options.numWords;
-	while (numWords-->0) 
-		words.push(this.createWord(options));
-	return words;
-};
-
-RootDict.prototype.createPhrase = function(options) {
-	options = extend({}, defaultCreateOptions, options);
-	options = extend(options, {numWords:options.randomizer.generate(5,8)})
-	var phrase = this.createWords(options).join(' ').replace(/  /g, ' ') + '. '; // (each word is already terminated by a space - but don't assume it's always so);
-	//phrase[0] = phrase[0].toUpperCase();
-	return phrase;
-};
-
-
-function defaultValidator(phrase) {
-	// trim out all invalid chars
-	var phrase = phrase.toLowerCase() // ignore case
-		.replace(/[^a-z]/gi, ' ') // make invalid chars a SPACE
-		.replace(/(?:and|an|or|the)/gi, ' ')// trim *very* common words
-		.replace(/  /g, ' ').trim(); // remove excess whitespace
-	return phrase;
-};
-
-RootDict.prototype.addPhrase = function(phrase, validator) {
-	if (!validator)
-		validator = defaultValidator;
-	phrase = validator.call(this, phrase);
-	this._addWords(phrase, this);
-	//for (var i = 0; i < words.length; i++) {
-	//	this._addWord(words[i], this);
-	//};
-};
-
-
-////////////////////////////////////////////
-//
-function DictItem(char) {
-	this.char = char;
-	this.usage = 0;
-	// this.items = type of Dict()
-}
-Dict.prototype.hasSubItems = function() {
-	return !!this.items;
-};
-DictItem.prototype.getSubItems = function(owner) {
-	if (!this.items) {
-		this.items = new Dict();
-		this.items.parent = owner;
-		this.items.depth = owner.depth + 1;
-	}
-	return this.items;
-};
-
-
-/////////////////////////////////////////////
-//
-function Randomizer(stack_size) {
-	// a simple wrapper to use crypto secure
-	this.rand = [];
-	this.at = 0;
-	stack_size = stack_size || 40;
-	stack_size += 4-(stack_size%4); // round up to 32bits
-
-	if (_hasWindow) {
-		this.values = new Uint8Array(stack_size);
-		window.crypto.getRandomValues(this.values); // redo the crypto
-	}
-	else
-	{
-		this.values = crypto.randomBytes(stack_size);
-	}
-}
-Randomizer.prototype.generate = function(min, max) {
-	if (this.at>=this.values.length)
-	{
-		 // redo the crypto
-		if (_hasWindow)
-			window.crypto.getRandomValues(this.values);
-		else
-			this.values = crypto.randomBytes(this.values.length);
-
-		this.at = 0;
-		//console.log('generated: ' + JSON.stringify(this.values))
-	}
-	var val = this.values[this.at++] | (this.values[this.at++] << 8) | (this.values[this.at++] << 16) | (this.values[this.at++] << 24); // node spits out 
-	val = val >>>0; // make UInt32
-	var MAX_RAND = 0xffffffff>>>0;
-	val = val*(max-min)/MAX_RAND + min;
-	if (val>max) val=max;
-	return val;
-};
-
-module.exports = RootDict;
-
-},{"crypto":undefined}]},{},[1]);
+        e.exports = t("./lib/dict");
+    }, {
+        "./lib/dict": 3
+    } ],
+    3: [ function(t, e, r) {
+        "use strict";
+        var i = typeof window !== "undefined";
+        if (!i) var n = t("crypto");
+        function o(t) {
+            for (var e = 1; e < arguments.length; e++) {
+                var r = arguments[e];
+                if (r === null || typeof r !== "object") continue;
+                var i = Object.keys(r);
+                var n = i.length;
+                while (n--) {
+                    t[i[n]] = r[i[n]];
+                }
+            }
+            return t;
+        }
+        var a = {
+            numWords: 8,
+            minWordLen: 3,
+            maxWordLen: 10,
+            randomizer: new c()
+        };
+        function s() {
+            this.totalUsage = 0;
+            this.items = {};
+            this.depth = 0;
+        }
+        s.prototype.a = function(t) {
+            var e = this.items[t];
+            if (!e) {
+                e = new f(t);
+                this.items[t] = e;
+            }
+            e.usage++;
+            this.totalUsage++;
+            return e;
+        };
+        s.prototype.b = function(t, e) {
+            var r = this;
+            for (var i = 0; i < t.length; i++) {
+                var n = r.a(t[i]);
+                if (t[i] == " ") r = e; else if (r.depth >= e.maxDepth) {
+                    r = r.parent || e;
+                    if (i > 0) {
+                        var n = e.get(t[i]);
+                        if (n) r = n.c(e);
+                    }
+                } else r = n.c(r);
+            }
+        };
+        s.prototype.d = function(t) {
+            t = Math.floor(t);
+            var e = 0;
+            var r = null;
+            for (var i in this.items) {
+                r = this.items[i];
+                e += r.usage;
+                if (t <= e) return r;
+            }
+            return r;
+        };
+        s.prototype.get = function(t) {
+            return this.items[t];
+        };
+        s.prototype.e = function(t, e, r) {
+            var i = e.generate(0, this.totalUsage);
+            var n = this.d(i);
+            if (!n) {
+                var o = r;
+                n = o.get(t);
+                if (!!n) {
+                    o = n.c(o);
+                    if (o == this) return r.e(t, e, r);
+                    return o.e(t, e, r);
+                }
+                return "";
+            }
+            if (!n || n.char == " ") return "";
+            var a = n.c(this).e(n.char, e, r);
+            return n.char + a;
+        };
+        function h(t) {
+            s.call(this);
+            this.maxDepth = t || 5;
+        }
+        o(h.prototype, s.prototype);
+        h.prototype.reset = function() {
+            this.totalUsage = 0;
+            this.items = {};
+        };
+        h.prototype.createWord = function(t) {
+            t = o({}, a, t);
+            if (t.minWordLen >= t.maxWordLen) throw new Error("Minimum word length (" + t.minWordLen + ") should be shorter than the maximum word length (" + t.maxWordLen + ")");
+            var e;
+            do {
+                e = this.e(" ", t.randomizer, this).trim();
+            } while (e.length < t.minWordLen || e.length > t.maxWordLen);
+            return e;
+        };
+        h.prototype.createWords = function(t) {
+            t = o({}, a, t);
+            var e = [];
+            var r = t.numWords;
+            while (r-- > 0) {
+                var i = 100;
+                do {
+                    var n = this.createWord(t);
+                } while (e.indexOf(n) >= 0 && i-- > 0);
+                e.push(n);
+            }
+            return e;
+        };
+        function u(t) {
+            var t = t.toLowerCase().replace(/[^a-z]/gi, " ").replace(/(?:and|an|or|the)/gi, " ").replace(/  /g, " ").trim();
+            return t;
+        }
+        h.prototype.learn = function(t, e) {
+            if (!e) e = u;
+            t = e.call(this, t);
+            this.b(t, this);
+        };
+        function f(t) {
+            this.char = t;
+            this.usage = 0;
+        }
+        f.prototype.c = function(t) {
+            if (!this.items) {
+                this.items = new s();
+                this.items.parent = t;
+                this.items.depth = t.depth + 1;
+            }
+            return this.items;
+        };
+        function c(t) {
+            this.rand = [];
+            this.at = 0;
+            t = t || 40;
+            t += 4 - t % 4;
+            if (i) {
+                this.values = new Uint8Array(t);
+                window.crypto.getRandomValues(this.values);
+            } else {
+                this.values = n.randomBytes(t);
+            }
+        }
+        c.prototype.generate = function(t, e) {
+            if (this.at >= this.values.length) {
+                if (i) window.crypto.getRandomValues(this.values); else this.values = n.randomBytes(this.values.length);
+                this.at = 0;
+            }
+            var r = this.values[this.at++] | this.values[this.at++] << 8 | this.values[this.at++] << 16 | this.values[this.at++] << 24;
+            r = r >>> 0;
+            var o = 4294967295 >>> 0;
+            r = r * (e - t) / o + t;
+            if (r > e) r = e;
+            return r;
+        };
+        e.exports = h;
+    }, {
+        crypto: undefined
+    } ]
+}, {}, [ 1 ]);
