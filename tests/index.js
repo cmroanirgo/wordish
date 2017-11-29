@@ -33,7 +33,7 @@ function createPhrase(dict) {
 
 
 
-var wordaccuracy = 5; // 3=low, 8=nearly perfect, 5=most
+var wordaccuracy = 10; // 3=low, 8=nearly perfect, 5=most
 var dict = new Dict(wordaccuracy);
 var samples = 3;
 
@@ -42,8 +42,9 @@ function loadAndCreate(sourceFile, validator) {
 		sourceFile += '.txt';
 	var sourceText = fs.readFileSync(path.join(__dirname, 'samples', sourceFile), {encoding:'utf8'})
 	dict.reset();
-	dict.learn(sourceText, validator);
+	var src2 = dict.learn(sourceText, validator);
 	//console.log(dump(dict, 2))
+	console.log("-------\n"+src2+"\n--------");
 	for (var i=0; i<samples; i++)
 		console.log(createPhrase(dict));
 }
@@ -59,17 +60,24 @@ function klingonValidator(phrase) {
 };
 
 (function main() {
-	const files      = ['essene',  'lorem', 'lorem_en', 'fox', 'sally', 'gpl', 'essene_kl',];
-	const validators = [ null   ,   null  ,  null     ,  null,   null,   null,  klingonValidator];
+	const files           = ['essene',  'lorem', 'lorem_en'     , 'fox', 'sally', 'gpl', 'essene_kl',];
+	const learn_options   = [ null   ,   null  ,  {minWordLen:4,
+												   xmaxWordLen:10},  null,   null,   null,  {minWordLen:4,
+												                                            maxWordLen:7,
+												                                            validator:klingonValidator}];
 
 	if (argv._[0]) {
-		loadAndCreate(argv._[0]);
+		var idx = files.indexOf(argv._[0]);
+		if (idx>=0)
+			loadAndCreate(argv._[0], learn_options[idx]);
+		else
+			loadAndCreate(argv._[0]);
 	}
 	else
 	{
 		for (var i=0; i<files.length; i++) {
 			console.log(files[i])
-			loadAndCreate(files[i], validators[i]);
+			loadAndCreate(files[i], learn_options[i]);
 			console.log("\n");
 		}
 	}	
