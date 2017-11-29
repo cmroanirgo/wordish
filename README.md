@@ -18,7 +18,7 @@ npm install -s wordish
 
 ## Installation (for use in browser)
 
-In your script the following and you're good to go!
+In your script, add the following and you're good to go!
 
 ```
 <script type="text/javascript" src='https://unpkg.com/wordish@latest/dist/wordish.min.js'></script>
@@ -46,7 +46,7 @@ var dict = new Wordish(); // the default accuracy is 5
 
 ### Note about accuracy
 
-The accuracy controls how many consecutive letters are remembered. For instance, if the accuracy is 5, when a word longer than that appears (eg 'welcome', then the tree would stop remembering after 'weclo' and the 'me' gets munged into the rest of the tree)
+The accuracy controls how many consecutive letters are remembered. For instance, if the accuracy is 5, when a word longer than that appears (eg 'welcome', then the tree would stop remembering after 'welco' and the 'me' gets munged into the rest of the tree)
 
 ### learn
 This is the first function to be called in order to populate the dictionary. It may be called multiple times to load different source texts. It has the form:
@@ -56,9 +56,9 @@ dict.learn(sourceText[,options]);
 ```
 
 where `options` may contain:
-* minWordLen. Any words shorter than this will be removed
-* maxWordLen. Any words longer than this will be removed
-* validator. This is a callback function which simply sanitises the input `sourceText`. Any characters (whether english letters or not), will be added to the dictionary.
+* _minWordLen_. Any words shorter than this will be removed
+* _maxWordLen_. Any words longer than this will be removed
+* _validator_. This is a callback function which simply sanitises the input `sourceText`. Any characters (whether english letters or not), will be added to the dictionary.
 
 The default validator is good for English words and looks like:
 ```
