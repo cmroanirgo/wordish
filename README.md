@@ -18,15 +18,15 @@ npm install -s wordish
 
 ## Installation (for use in browser)
 
-In your script add `<script type="text/javascript" src='https://unpkg.com/wordish@latest/dist/wordish.min.js'></script>` and then you're good to go!
+In your script the following and you're good to go!
 
 ```
+<script type="text/javascript" src='https://unpkg.com/wordish@latest/dist/wordish.min.js'></script>
 <script type="text/javascript">
 	function generate(){
 		var dict = new Wordish(10); // 10=high accuracy/readbility of words
-		dict.learn(sourceText);
+		dict.learn(sourceText, { });
 		var words = dict.createWords({
-
 		});
 		$('#result').value  = words.join(' ');
 	}
@@ -48,9 +48,6 @@ var dict = new Wordish(); // the default accuracy is 5
 
 The accuracy controls how many consecutive letters are remembered. For instance, if the accuracy is 5, when a word longer than that appears (eg 'welcome', then the tree would stop remembering after 'weclo' and the 'me' gets munged into the rest of the tree)
 
-### Methods
-The following list, sorted by expected usage
-
 ### learn
 This is the first function to be called in order to populate the dictionary. It may be called multiple times to load different source texts. It has the form:
 
@@ -61,9 +58,9 @@ dict.learn(sourceText[,options]);
 where `options` may contain:
 * minWordLen. Any words shorter than this will be removed
 * maxWordLen. Any words longer than this will be removed
-* validator. This is a callback function which simply sanitises the input `sourceText`.
+* validator. This is a callback function which simply sanitises the input `sourceText`. Any characters (whether english letters or not), will be added to the dictionary.
 
-The default validator is good for English words and similar to:
+The default validator is good for English words and looks like:
 ```
 function defaultValidator(text) {
 	return text.toLowerCase() // ignore case
@@ -73,7 +70,7 @@ function defaultValidator(text) {
 };
 ```
 
-A 'Klingon' validator would be different, because it has Uppercase characters and apostrophes inside a word:
+A _Klingon_ validator would be different, because it has uppercase characters and apostrophes inside a word:
 ```
 function klingonValidator(text) {
 	var reInvalidChars = /[^a-z\']/gi; // uses upper/lower AND '
@@ -143,13 +140,15 @@ var words = dict.createWords(...)
 ## API Examples
 
 
+#### Simple
+
 ```
 const fs = require('fs')
 const Wordish = require('Wordish');
 const filename = "somefile.txt"; 
 
 // Load up a text document that we'll use for source words
-var accuracy = 5; // from 2 to 20..ish. 10 is very accurate, 2 is very random/ gibberish
+var accuracy = 5; // from 2 to 20..ish. 10 is very accurate, 2 is very random/ gibberish. Words longer than 5 will get 'munged' into the dictionary.
 var dict = new Wordish(accuracy);
 dict.learn(fs.readFileSync(filename, {encoding:'utf8'}))
 
@@ -163,7 +162,8 @@ var options = { // these options are all optional
 console.log(dict.createWords(options).join('-'));
 ```
 
-As a [correct battery horse staple](https://xkcd.com/936/) password generator.
+#### A [correct battery horse staple](https://xkcd.com/936/) password generator.
+
 Note how the learn option, `minWordLen` here matches the `createWord` option & means that shorter words cannot be used to 'make up' a word. You need to use a long section of source text for this to work securely, however. (eg War and Peace, The Bible, or a list of the most common words):
 
 
@@ -188,7 +188,7 @@ for (var i=0; i<5; i++)
 	console.log(dict.createWords(options).join(' '));
 ```
 
-Support Klingon!:
+#### Support Klingon!:
 
 ```
 const fs = require('fs')
