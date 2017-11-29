@@ -4,10 +4,10 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,maximum-scale=2.0" />
 <link rel="stylesheet" type="text/css" href="styles.css">
-<script type="text/javascript" src="js/wordish.min.js" ></script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"
 			  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
 			   crossorigin="anonymous"></script>
+<script type="text/javascript" src="js/wordish.min.js" ></script>
 <script type="text/javascript" src="js/main.js" ></script>
 </head>
 <body>
@@ -26,9 +26,18 @@
 			<option value='lorem'>Lorem Ipsum</option>
 			<option value='klingon'>Klingon</option>
 			<option value='russian'>Literary Russian</option>
+			<option value='custom'>Custom...</option>
 		</select>
-		<a id="more-button" href="#">More</a>
-		<div id="more">
+		<div id="custom-source-container">
+			<a id="custom-more-btn" class="reveal-btn" data-id="custom-more" data-show="Show Custom Text" data-label-hide="Hide Custom Text" href="#">Hide Custom Text</a>
+			<div id="custom-more" class="reveal show">
+				<label for="num-words">Add your custom text</label>
+			    <textarea id="custom-source">(Add lots of words here)</textarea>
+			    <p id="custom-hint"></p>
+			</div>
+		</div>
+		<a class="reveal-btn" data-id="more" data-label="Show More" data-label-hide="Hide" href="#">Show More</a>
+		<div id="more" class="reveal">
 			<label for="num-words">Number of Words</label>
 			<input type="range" id="num-words"  min="2" max="20" value="4"><br/>
 			<label for="rand-words">Randomize Number of Words</label>
@@ -46,9 +55,13 @@
 				<option value='-'>-</option>
 				<option value='.'>.</option>
 			</select><br/>
+			<label for="trim">Trim short and long words</label>
+			<input type="checkbox" id="trim" checked="checked"><br/>
 		</div>
+
 		<button id="generate">Generate</button><br/>
 		<input id='result' type="text" />
+
 	</form>
 	</div>
 	<div id="footer">Copyright &copy; <a href="https://kodespace.com">kodespace.com</a> 2017. All rights reserved. <a href="https://github.com/cmroanirgo/wordish" ><img src="github12.png" alt="source on github"/></a></div>

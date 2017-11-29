@@ -1,8 +1,5 @@
 (function main(){
 
-function generate(){
-}
-window.generate = generate;
 
 function fetchSource(sourceObj, cb) {
 	if (sourceObj.text) {
@@ -33,48 +30,124 @@ var sources = {
 	"lorem"      : { file: "lorem.txt" },
 	"klingon"    : { file: "klingon.txt", validator: klingonValidator },
 	"russian"    : { file: "tolstoy.txt", validator: multilingualValidator },
+	"custom"     : { text: ""}
 };
 
 function generate() {
 	$('#result').value = '';
+	if ($('#style').val()=='custom') {
+		// get the custom text from #custom-source, rather than the web
+		sources['custom'].text = $('#custom-source').val();
+		if (!validateCustomSource()){
+			console.log("Can't generate yet, not enough text!")
+			return;
+		}
+	}
 	fetchSource(sources[$('#style').val()], function(srcObj) {
-		var wordish = new Wordish(parseInt($('#accuracy').val()));
-		wordish.learn(srcObj.text, srcObj.validator);
+		var accuracy = parseInt($('#accuracy').val());
 		var options = {
 			minWordLen: parseInt($('#min-len').val()),
 			maxWordLen: parseInt($('#max-len').val()),
 			numWords: parseInt($('#num-words').val()),
 			randomizeNumWords: parseInt($('#rand-words').val())
 		}
+
+		var learnOptions = { };
+		if (srcObj.validator)
+			learnOptions.validator = srcObj.validator;
+		if ($('#trim').is(':checked')) {
+			learnOptions.minWordLen = Math.min(options.minWordLen, accuracy);
+			learnOptions.maxWordLen = Math.max(options.maxWordLen, accuracy);
+		}
+
+		var wordish = new Wordish(accuracy);
+		wordish.learn(srcObj.text, learnOptions);
 		var words = wordish.createWords(options);
 		$('#result').val(words.join($('#separator').val()));
 
 	})
 	return false;
 }
+
+function validateCustomSource() {
+	var minLength = parseInt($('#min-len').val());
+	var maxLength = parseInt($('#max-len').val());
+	var numWords = parseInt($('#num-words').val());
+	var accuracy = parseInt($('#accuracy').val());
+	minLength = Math.min(minLength, accuracy)
+	var text = $('#custom-source').val();
+	var words = text.toLowerCase().replace(/\W/gi, ' ').replace(/  /g, ' ').trim().split(' ');
+	words = words.filter(function(item) { return item.length>=minLength && item.length<=maxLength});
+	if (words.length < numWords) {
+		$('#custom-hint').text('Please add ' + (numWords-words.length) + ' more words, at least ' + minLength + ' letters long.');
+		$('#custom-hint').show();
+	}
+	else 
+		$('#custom-hint').hide();
+	return words.length >= numWords;
+}
+
+// reveal/accordian
+function updateRevealLabelStatus($btn) {
+	$container = $('#'+$btn.attr('data-id'));
+	if ($container.hasClass('show'))
+		$btn.text($btn.attr('data-label-hide')) // "Show Less" / "Hide", etc
+	else
+		$btn.text($btn.attr('data-label')); // "Show More"
+}
+function updateGenerateBtnStatus() { // returns true if generate is enabled
+	var enabled = $('#style').val()!='custom' || validateCustomSource();
+	$('#generate').prop('disabled', !enabled)
+	return enabled;
+
+}
+
 $(document).ready(function() {
 	$('#generate').on('click', generate)
+	$('input:not(#result)').on("change", generate);
+	$('select').on("change", function() {
+		if ($(this).val()=='custom') {
+			// show (&expand) custom source textarea when user chooses 'Custom...'
+			$('#custom-source-container').addClass('show');
+			$('#custom-more').addClass('show');
+		}
+		else {
+			$('#custom-source-container').removeClass('show'); // hide dlg when user chooses other than 'Custom...'
+			generate();
+		}
+		updateRevealLabelStatus($('#custom-more-btn'), $('#custom-more'))
+		updateGenerateBtnStatus();
+	});
+	var typing_timeout = -1;
+	$('#custom-source').on('input paste', function() {
+		updateGenerateBtnStatus();
+		if (typing_timeout>=0) clearTimeout(typing_timeout);
+		typing_timeout = setTimeout(function() {
+			if (updateGenerateBtnStatus()) 
+				generate();
+		}, 1000);
+	});
 
-	$('input:not(#result),select').on("change", generate)
+	// ranges
 	$('input[type="range"]').on("input", function(){
 			$(this).next().html(this.value);
 		}).after("<span class='range-value'></span>").each(function() {
 			$(this).next().html(this.value);
 		});
-	$('#more-button').on('click', function() {
-		var $more = $('#more');
+
+
+	$('.reveal-btn').on('click', function() {
 		var $btn  = $(this);
-		if ($more.hasClass('show')) {
-			$more.removeClass('show')
-			$btn.text('More')
-		}
+		var $container = $('#' + $btn.attr('data-id'));
+		if ($container.hasClass('show'))
+			$container.removeClass('show')
 		else
-		{
-			$more.addClass('show')
-			$btn.text('Less')
-		}
+			$container.addClass('show')
+		updateRevealLabelStatus($btn, $container);
 		return false;
 	});
+	updateRevealLabelStatus($('#custom-more-btn'))
+	updateGenerateBtnStatus();
 	generate();
 }); 
 

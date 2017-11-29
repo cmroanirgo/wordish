@@ -53,10 +53,11 @@ input:not(#result), select { width:180px;}
 	vertical-align: top;
 	padding: 1em;
 }
-#more { position: relative;  display: none; padding: 1em 0;}
-#more * { font-size: 1em; }
-#more.show { display: block;}
-#more-button { display:block; 
+.reveal { position: relative;  display: none; padding: 1em 0;}
+.reveal * { font-size: 1em; }
+.show { display: block !important;}
+
+.reveal-btn { display:block; 
 	width:200px; 
 	text-align:right; 
 	font-size: 0.6em; 
@@ -65,8 +66,13 @@ input:not(#result), select { width:180px;}
 	text-decoration: none;
 	color:#333;
 }
-#more-button:before { content: "[ ";}
-#more-button:after { content: " ]";}
+.reveal-btn:before { content: "[ ";}
+.reveal-btn:after { content: " ]";}
+
+#custom-source-container { display: none; font-size:1em; }
+#custom-hint { color: #a03030; background-color: #ffc0c0; width: 80%; padding: 0.3em;}
+
+/* about page css */
 .footnote { font-size:0.7em;}
 p, blockquote { margin-bottom: 1em; font-size:0.8em;}
 p.footnote { margin-top: 2em; }
