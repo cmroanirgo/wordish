@@ -182,7 +182,7 @@ var options = { // these options are all optional
 	minWordLen: 5,
 	maxWordLen: 10,
 	numWords: 4,
-	randomizeNumWords: 2 // betwen 4 and 6 words made
+	randomizeNumWords: 2 // between 4 and 6 words made
 }
 for (var i=0; i<5; i++)
 	console.log(dict.createWords(options).join(' '));
